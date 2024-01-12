@@ -27,7 +27,7 @@ def download_reports(url, folder):
         print(f"下载完成：{file_name}")
 
 if __name__ == "__main__":
-    url = "https://www.mohurd.gov.cn/gkml/gkml_0001.html"  # 请替换为您要下载通报的住建部网站页面链接
-    folder = "reports"  # 设置您希望保存通报的文件夹名称
+    url = "https://www.mohurd.gov.cn/gongkai/fdzdgknr/gkzhudongxingzhengchufa/index.html"  # 请替换为您要下载通报的住建部网站页面链接
+    folder = "C:\Users\lisw\Desktop\post"  # 设置您希望保存通报的文件夹名称
     download_reports(url, folder)
 ```
