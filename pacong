@@ -1,0 +1,33 @@
+```python
+import requests
+from bs4 import BeautifulSoup
+import os
+
+def download_reports(url, folder):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # 找到所有通报链接
+    report_links = soup.find_all('a', href=True)
+
+    # 过滤出通报链接
+    filtered_links = [link['href'] for link in report_links if '通报' in link.text]
+
+    # 创建文件夹（如果不存在）
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    # 下载通报
+    for link in filtered_links:
+        response = requests.get(link, stream=True)
+        file_name = os.path.join(folder, link.split('/')[-1])
+        with open(file_name, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+        print(f"下载完成：{file_name}")
+
+if __name__ == "__main__":
+    url = "https://www.mohurd.gov.cn/gkml/gkml_0001.html"  # 请替换为您要下载通报的住建部网站页面链接
+    folder = "reports"  # 设置您希望保存通报的文件夹名称
+    download_reports(url, folder)
+```
